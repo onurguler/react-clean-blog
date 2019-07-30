@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb://localhost/react-blog-test",
+  "jwtSecret": "Secret key for jsonwebtoken"
+}
