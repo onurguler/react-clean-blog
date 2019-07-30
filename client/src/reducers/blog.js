@@ -1,4 +1,4 @@
-import { GET_BLOGS, BLOG_ERROR } from '../actions/types';
+import { GET_BLOGS, BLOG_ERROR, GET_BLOG } from '../actions/types';
 
 const initialState = {
   blog: null,
@@ -15,6 +15,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         blogs: payload,
+        loading: false
+      };
+    case GET_BLOG:
+      return {
+        ...state,
+        blog: payload,
         loading: false
       };
     case BLOG_ERROR:

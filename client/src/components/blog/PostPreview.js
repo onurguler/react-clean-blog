@@ -11,11 +11,7 @@ const PostPreview = ({
       {comImage && (
         <Link to={`/blogs/${_id}`}>
           <div className="img text-center">
-            <img
-              className="img-thumbnail rounded"
-              src={comImage}
-              alt="blog image"
-            />
+            <img className="img-thumbnail rounded" src={comImage} alt={title} />
           </div>
         </Link>
       )}
@@ -28,7 +24,7 @@ const PostPreview = ({
           {comSentence && <h3 className="post-subtitle">{comSentence}</h3>}
         </Link>
         <p className="post-meta">
-          Posted by <a href="#">{name}</a> on{' '}
+          Posted by <Link to="#">{name}</Link> on{' '}
           {moment(date).format('MMMM DD, YYYY')} at{' '}
           {moment(date).format('h:mm:ss a')}
         </p>

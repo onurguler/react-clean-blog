@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import home from '../../img/home-bg.jpg';
 
@@ -26,7 +25,5 @@ const PageHeader = props => {
     </header>
   );
 };
-
-PageHeader.propTypes = {};
 
 export default PageHeader;
