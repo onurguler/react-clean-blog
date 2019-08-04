@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/auth';
 
-const Navbar = props => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const [showMenu, toggleMenu] = useState(false);
+
+  const show = showMenu ? 'show' : '';
+
+  const authLinks = (
+    <Fragment>
+      <li className="nav-item">
+        <Link className="nav-link" to="/admin/dashboard">
+          Dashboard
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link onClick={logout} className="nav-link" to="#">
+          Logout
+        </Link>
+      </li>
+    </Fragment>
+  );
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light fixed-top"
@@ -12,6 +34,7 @@ const Navbar = props => {
         </a>
         <button
           className="navbar-toggler navbar-toggler-right"
+          onClick={() => toggleMenu(!showMenu)}
           type="button"
           data-toggle="collapse"
           data-target="#navbarResponsive"
@@ -21,7 +44,9 @@ const Navbar = props => {
           Menu
           <i className="fas fa-bars" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarResponsive">
+        <div
+          className={`collapse navbar-collapse ${show}`}
+          id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <a className="nav-link" href="index.html">
@@ -43,11 +68,19 @@ const Navbar = props => {
                 Contact
               </a>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/signin">
-                Login
-              </Link>
-            </li>
+            {
+              <Fragment>
+                {isAuthenticated ? (
+                  authLinks
+                ) : (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/admin/signin">
+                      Login
+                    </Link>
+                  </li>
+                )}
+              </Fragment>
+            }
           </ul>
         </div>
       </div>
@@ -55,4 +88,16 @@ const Navbar = props => {
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(Navbar);
